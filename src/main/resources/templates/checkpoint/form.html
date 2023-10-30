@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Grade Manager</title>
+</head>
+
+<body class="grey lighten-2">
+    <nav>
+        <div class="nav-wrapper blue darken-1">
+            <a href="#" class="brand-logo">Grade Manager</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="active"><a href="/checkpoint">Pendentes</a></li>
+                <li><a href="#">Finalizadas</a></li>
+                <li><a href="#">Notas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <h2>Cadastrar Checkpoint</h2>
+
+        <div class="card">
+            <form th:action="${'/checkpoint'}" method="post" th:object="${checkpoint}">
+                <div class="card-content">
+                    <div class="input-field">
+                        <input 
+                            type="text" 
+                            th:field="*{titulo}"
+                            th:classappend="${#fields.hasErrors('titulo')} ? invalid"
+                        >
+                        <label for="titulo">Título</label>
+                        <span class="helper-text red-text" th:errors="*{titulo}"></span>
+                    </div>
+
+                    <div class="input-field">
+                        <textarea 
+                            th:field="*{descricao}"
+                            class="materialize-textarea"
+                            th:classappend="${#fields.hasErrors('descricao')} ? invalid"
+                        ></textarea>
+                        <label for="descricao">Descrição</label>
+                        <span class="helper-text red-text" th:errors="*{descricao}"></span>
+                    </div>
+
+                    <label for="valor">Valor</label>
+                    <p class="range-field">
+                        <input 
+                            type="range" 
+                            th:field="*{valor}"
+                            min="1" 
+                            max="10" 
+                        />
+                    </p>
+                    <span class="helper-text red-text" th:errors="*{valor}"></span>
+
+                    <div class="input-field">
+                        <input 
+                            type="text" 
+                            th:field="*{data}"
+                            th:classappend="${#fields.hasErrors('data')} ? invalid"
+                        >
+                        <label for="data">Data</label>
+                        <span class="helper-text red-text" th:errors="*{data}"></span>
+                    </div>
+
+                </div>
+                <div class="card-action right-align">
+                    <a href="/checkpoint" class="btn grey">
+                        <i class="material-icons left">chevron_left</i>
+                        Cancelar
+                    </a>
+                    <button class="btn">
+                        <i class="material-icons left">check</i>
+                        Cadastrar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</body>
+
+</html>

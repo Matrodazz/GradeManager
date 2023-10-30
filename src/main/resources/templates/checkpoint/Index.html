@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Grade Manager</title>
+</head>
+
+<body class="grey lighten-2">
+    <nav>
+        <div class="nav-wrapper blue darken-1">
+            <a href="#" class="brand-logo">Grade Manager</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="active"><a href="/checkpoint" th:text="#{checkpoint.pending}"></a></li>
+                <li><a href="#" th:text="#{checkpoint.done}"></a></li>
+                <li><a href="#" th:text="#{grades}"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="card-panel teal lighten-2" th:if="${success}" th:text="${success}"></div>
+        <div class="card-panel red accent-2 white-text" th:if="${error}" th:text="${error}"></div>
+
+        <h2>Checkpoints Pendentes</h2>
+        <p>Lista de checkpoints registrados que não foram concluídos ainda pelos alunos.</p>
+
+        <div class="row">
+            <div class="col s12 m6 l4" th:each="checkpoint: ${checkpoints}">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title" th:text="${checkpoint.titulo}"></span>
+                        <p th:text="${checkpoint.descricao}"></p>
+                        <span data-badge-caption=" Pontos" class="badge cyan darken-2 white-text" th:text="${checkpoint.valor}"></span>
+                        <p class="blue-grey-text darken-2" th:text="${checkpoint.data}"></p>
+
+                    </div>
+                    <div class="card-action">
+                        <a th:href="${'/checkpoint/delete/' + checkpoint.id}" class="btn red accent-2">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="fixed-action-btn">
+        <a href="/checkpoint/new" class="btn-floating btn-large blue">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        const options = {
+            constrainWidth: false,
+            coverTrigger: false
+        }
+        var instances = M.Dropdown.init(elems, options);
+    });
+</script>
+
+</html>
